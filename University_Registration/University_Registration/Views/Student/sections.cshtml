@@ -1,0 +1,218 @@
+﻿@model Tuple<List<University_Registration.Models.Section>, List<University_Registration.Models.Subject>>
+
+@{
+    ViewBag.Title = "sections";
+    Layout = "~/Views/Shared/_mainLayout.cshtml";
+}
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>vCard - Personal Portfolio</title>
+
+<!--
+  - favicon
+-->
+<link rel="shortcut icon" href="~/vcard-personal-portfolio-master/assets/images/logo.ico" type="image/x-icon">
+
+<!--
+  - custom css link
+-->
+<link rel="stylesheet" href="~/vcard-personal-portfolio-master/assets/css/style.css">
+
+<!--
+  - google font link
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+    .table-caption {
+        font-size: 1.2em;
+        font-weight: bold;
+        color: #333;
+        text-align: center;
+        padding: 10px 0;
+    }
+
+    .navbar-link {
+        font-weight: bold;
+    }
+
+    .service-item::before {
+        background-color: white;
+    }
+
+    .service-item p {
+        color: black;
+    }
+
+    .about-text p {
+        color: white !important;
+    }
+
+    .contacts-list i {
+        font-size: 30px;
+        color: white
+    }
+
+    .icon-box {
+    }
+
+        .icon-box::before {
+            background-color: transparent;
+        }
+
+
+
+        .icon-box :host .ionicon {
+            stroke: currentcolor;
+            color: white !important;
+        }
+
+    .icon-inner, .ionicon, svg {
+        color: white !important
+    }
+
+    .content-card::before {
+        background-color: white !important
+    }
+
+    .testimonials-item-title {
+        color: black !important;
+    }
+</style>
+<div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+
+
+    @Html.Action("_Oprofileuser")
+
+
+    @{
+
+        var q = Convert.ToInt32(Request.QueryString["id"]);
+
+        int x = 0;
+        foreach (var item in Model.Item2)
+        {
+            x++;
+            if (q == item.Subject_ID)
+            {
+
+                <h1 style="text-align:right"> @item.Name</h1>
+            }
+
+            if (x == 1)
+            {
+                break;
+            }
+
+
+        }
+    }
+
+    @using (Html.BeginForm("Add", "Student", FormMethod.Post))
+    {
+
+    <table class="table table-striped" style="width: 50%; background-color:  #020031;color:white;margin-top:100px">
+
+        <thead>
+
+
+
+
+
+            <tr>
+                <th scope="col">Section no.</th>
+                <th scope="col">Section time</th>
+                <th scope="col">days</th>
+                <th scope="col">hours</th>
+                <th scope="col">ADD</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Item1)
+            {
+                if (q == item.Subject.Subject_ID)
+                {
+                    <tr>
+                        <th scope="row">@item.SectionNumber</th>
+                        <td>
+
+
+                            @item.SectionTime:00_@Convert.ToInt32(@item.SectionTime + 1):00
+                        </td>
+
+                        <td>
+                            @if (item.SectionDay == "SUNDAY")
+                            {
+
+                                <p style="color:white;font-weight:bold">SUN-TUE-THU</p>
+
+
+
+                            }
+                            else
+                            {
+                                <p style="color:white;font-weight:bold">MON-WED</p>
+
+                            }
+                        </td>
+                        <td>@item.Subject.NumHour</td>
+
+
+
+
+                        <td>
+                            @*<input type="submit" />*@
+                            @Html.ActionLink("ADD", "Add", "Student", new { ADD = item.Section_ID }, null)
+                            
+                            @*<input type="submit" value=""*@
+                            @*@Html.ActionLink("ADD", "sections", "Student", new { studentId = 1, @item.Subject_ID, item.Section_ID }, null)*@
+
+                            @*@Html.ActionLink("ADD", "CREATE", "Subject", new { studentId =item.su }, null)*@
+
+                         
+                        </td>
+
+
+
+                    </tr>
+
+                }
+
+
+            }
+
+
+            @*<tr>
+                    <th scope="row">2</th>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>K</td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td>Larry</td>
+                    <td>the Bird</td>
+                    <td>GG</td>
+                </tr>*@
+        </tbody>
+    </table>
+    }
+
+    @if(ViewBag.sweet == "sweet")
+            {
+                <script>
+                    Swal.fire('Any fool can use a computer')
+                </script>
+            }
+</div>
+<script src="~/vcard-personal-portfolio-master/assets/js/script.js"></script>
+<!--
+  - ionicon link
+-->
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
